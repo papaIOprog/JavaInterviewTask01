@@ -33,8 +33,6 @@ public class Main {
                 TaskSolverStrategy solver;
 
                 String filePath = cmd.getOptionValue(fileOption);
-                if (cmd.hasOption(timezoneOption)) solver = new DifferentTimezonesSolver();
-                else solver = new CommonTimezoneSolver();
 
 
                 ClassLoader classloader = Thread.currentThread().getContextClassLoader();
@@ -43,9 +41,19 @@ public class Main {
 
                 JsonParser<Data> dataParser = new JsonParser<>(new PropertyNamingStrategies.SnakeCaseStrategy());
                 Data data = dataParser.parse(is, Data.class);
-                double solverAnswer = solver.solve(data.getTickets());
-                double answer = solverAnswer / 1000 / 60 / 60;
-                System.out.println(String.format("Average flight is %.2f hours.", answer));
+
+                if (cmd.hasOption(timezoneOption)) solver = new DifferentTimezonesSolver(data.getTickets());
+                else solver = new CommonTimezoneSolver(data.getTickets());
+
+
+                double solverAverageAnswer = solver.solveAverage();
+                double averageAnswer = solverAverageAnswer / 1000.0 / 60.0 / 60.0;
+                System.out.printf("Average flight is %.2f hours.%n", averageAnswer);
+
+                double percentile = 90.0;
+                long solverPercentileAnswer = solver.solvePercentile(percentile);
+                double percentileAnswer = solverPercentileAnswer / 1000.0 / 60.0 / 60.0;
+                System.out.printf("Percentile %.2f%% is %.2f hours.%n", percentile, percentileAnswer);
             }
         }
         catch (IOException e) {

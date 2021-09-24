@@ -11,15 +11,16 @@ Available options:
 usage: Flights
  -file <arg>     Input filename
  -help           Outputs help
- -timezonemode   Calculate average flight time include timezones
-                 (Departure from Vladivostok is GMT+10, arrival to Tel
-                 Aviv is GMT+3)
+ -timezonemode   Calculate average flight time and 90% percentile
+                 including timezones (Departure from Vladivostok is
+                 GMT+10, arrival to Tel Aviv is GMT+3)
 ```
-Following command calculates average flight time from Vladivostok to Tel Aviv without according to timezones (it means, that `departure_time` has same timezone as `arrival_time`) with built-in JSON file:
+Following command calculates average flight time and 90% percentile from Vladivostok to Tel Aviv without according to timezones (it means, that `departure_time` has same timezone as `arrival_time`) with built-in JSON file:
 * `java -jar ./target/Flight-1.0-SNAPSHOT-jar-with-dependencies.jar`
 
 ```
 Average flight is 7,53 hours.
+Percentile 90,00% is 9,75 hours.
 ```
 
 To specify your own file:
@@ -30,4 +31,5 @@ To enable calculation mode that accords on timezones (it means, that `departure_
 
 ```
 Average flight is 14,53 hours.
+Percentile 90,00% is 16,75 hours.
 ```

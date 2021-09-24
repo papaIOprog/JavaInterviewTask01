@@ -6,5 +6,6 @@ import java.util.ArrayList;
 
 public interface TaskSolverStrategy {
 
-    public Double solve(ArrayList<Ticket> tickets);
+    public Double solveAverage();
+    public long solvePercentile(double percentile);
 }
